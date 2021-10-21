@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+    ftp-server:
+      restart: always
+      image: stilliard/pure-ftpd
+      container_name: ftp-server
+      ports:
+          - "16021:21"
+          - "30010-30019:30010-30019"
+      environment:
+        PUBLICHOST: "localhost"
+        FTP_USER_NAME: "imuser"
+        FTP_USER_PASS: "imagine1181"
+        FTP_USER_HOME: "/home/imuser"
+        FTP_USER_UID: "1001"
+        FTP_USER_GID: "1002"
+        FTP_PASSIVE_PORTS: "30010:30019"
+        FTP_MAX_CONNECTIONS: "5"
+        TLS_USE_DSAPRAM: "true"
+      volumes:
+        - "user-passwd:/etc/pure-ftpd/passwd"
+        - "./data:/home/imuser"
+
+
+volumes:
+    user-passwd:
+      driver: local
